@@ -288,7 +288,8 @@ local get_first_normal_recipe     = function(pos, stack, actor)
     if minetest.get_modpath("mcl_grindstone") then
         if minetest.settings:get_bool("k_recyclebin.recycle_cursed", false) then
             itemname = mcl_grindstone.remove_enchant_name(stack)
-        else
+        -- protect against mineclone2 mcl_grindstone which does not offer this function
+        elseif mcl_grindstone.disenchant ~= nil then
             local newstack = mcl_grindstone.disenchant(stack)
             if "" ~= newstack then
                 itemname = newstack:get_name()
